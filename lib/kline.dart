@@ -91,31 +91,8 @@ class KlinePage extends StatelessWidget {
                     bloc.setScreenWith(width);
                   }
                   return Container(
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            color: Colors.black,
-                            child: KlineSingleView(type: 0),
-                          ),
-                          flex: 20,
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.black,
-                          ),
-                          flex: 1,
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.black,
-                            child: KlineSingleView(type: 1),
-                          ),
-                          flex: 4,
-                        ),
-                      ],
-                    ),
-                  );
+                      color: Color(0xff101c2c),
+                      child: KlineSingleView(type: 0));
                 })));
   }
 }

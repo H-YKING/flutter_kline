@@ -6,19 +6,37 @@ import 'dart:math';
 import 'package:candleline/model/KlineData.dart';
 
 class KlineBloc extends BlocBase {
+  // 总数据的流入流出
   BehaviorSubject<List<Market>> _klineListController =
       BehaviorSubject<List<Market>>();
-  PublishSubject<List<Market>> _klineCurrentListController =
-      PublishSubject<List<Market>>();
-
   Sink<List<Market>> get _inklineList => _klineListController.sink;
   Stream<List<Market>> get outklineList => _klineListController.stream;
 
+  // 当前数据的流入流出
+  PublishSubject<List<Market>> _klineCurrentListController =
+      PublishSubject<List<Market>>();
   Sink<List<Market>> get _inCurrentKlineList =>
       _klineCurrentListController.sink;
   Stream<List<Market>> get outCurrentKlineList =>
       _klineCurrentListController.stream;
 
+  // 点击获取单条k线数据
+  PublishSubject<Market> _klineMarketSubject = PublishSubject<Market>();
+  Sink<Market> get _klineMarketSink => _klineMarketSubject.sink;
+  Stream<Market> get klineMarketStream => _klineMarketSubject.stream;
+
+  // periodSwitch
+  PublishSubject<String> _klinePeriodSwitchSubject = PublishSubject<String>();
+  Sink<String> get _klinePeriodSwitchSink => _klinePeriodSwitchSubject.sink;
+  Stream<String> get _klinePeriodSwitchStream =>
+      _klinePeriodSwitchSubject.stream;
+
+      // showloading
+  PublishSubject<bool> _klineShowLoadingSubject = PublishSubject<bool>();
+  Sink<bool> get _klineShowLoadingSink => _klineShowLoadingSubject.sink;
+  Stream<bool> get klineShowLoadingStream => _klineShowLoadingSubject.stream;
+
+  /// 单屏显示的kline数据
   List<Market> klineList = List();
   List<Market> stringList = List();
 
@@ -66,7 +84,8 @@ class KlineBloc extends BlocBase {
   }
 
   void getSubKlineList(int from, int to) {
-    if (to > this.stringList.length) to = this.stringList.length;  // 超过长度要判断一下，不然会出bug
+    if (to > this.stringList.length)
+      to = this.stringList.length; // 超过长度要判断一下，不然会出bug
     List<Market> list = this.stringList;
     klineList = list.sublist(from, to);
     calculateLimit();

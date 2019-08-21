@@ -25,24 +25,23 @@ class KlineSeparateView extends StatelessWidget {
                 max: klineBloc.priceMax,
                 min: klineBloc.priceMin,
                 maxVolume: klineBloc.volumeMax,
-                lineColor: new Color.fromRGBO(255, 255, 255, 0.4),
+                lineColor: new Color.fromRGBO(255, 255, 255, 0.3),
               ));
         });
   }
 }
 
 class _SeparateViewPainter extends CustomPainter {
-  _SeparateViewPainter({
-    Key key,
-    @required this.data,
-    @required this.max,
-    @required this.min,
-    @required this.maxVolume,
-    @required this.rectWidth,
-    this.lineWidth = 1.0,
-    this.lineColor = Colors.grey,
-    this.type
-  });
+  _SeparateViewPainter(
+      {Key key,
+      @required this.data,
+      @required this.max,
+      @required this.min,
+      @required this.maxVolume,
+      @required this.rectWidth,
+      this.lineWidth = 1.0,
+      this.lineColor = Colors.grey,
+      this.type});
 
   final List<Market> data;
   final double lineWidth;
@@ -52,19 +51,18 @@ class _SeparateViewPainter extends CustomPainter {
   final double maxVolume;
   final double rectWidth;
   final int type;
+  final double start = 30;
 
   @override
   void paint(Canvas canvas, Size size) {
     if (max == null || min == null) {
       return;
     }
-    
-    if (type == 0) {
-      drawPriceLine(canvas, size);
-    } else {
-      drawVolumeLine(canvas, size);
-    }
 
+    _drawGrid(canvas, size);
+
+    drawPriceLine(canvas, size);
+    drawVolumeLine(canvas, size);
   }
 
   drawText(Canvas canvas, Offset offset, String text) {
@@ -72,14 +70,16 @@ class _SeparateViewPainter extends CustomPainter {
         text: new TextSpan(
             text: text,
             style: new TextStyle(
-                color: lineColor, fontSize: 10.0, fontWeight: FontWeight.normal)),
+                color: lineColor,
+                fontSize: 10.0,
+                fontWeight: FontWeight.normal)),
         textDirection: TextDirection.ltr);
     textPainter.layout();
     textPainter.paint(canvas, offset);
   }
 
-  drawPriceLine(Canvas canvas, Size size) {
-    double height = size.height - 20;
+  void _drawGrid(Canvas canvas, Size size) {
+    double height = size.height;
     double width = size.width;
 
     Paint linePaint = Paint()
@@ -87,55 +87,56 @@ class _SeparateViewPainter extends CustomPainter {
       ..strokeWidth = lineWidth;
 
     //绘制横线
-    double heightOffset = height / 4;
-    canvas.drawLine(Offset(0, 20), Offset(width, 20), linePaint);
-    canvas.drawLine(
-        Offset(0, heightOffset + 20), Offset(width, heightOffset + 20), linePaint);
-    canvas.drawLine(Offset(0, heightOffset * 2 + 20),
-        Offset(width, heightOffset * 2 + 20), linePaint);
-    canvas.drawLine(Offset(0, heightOffset * 3 + 20),
-        Offset(width, heightOffset * 3 + 20), linePaint);
-    canvas.drawLine(
-        Offset(0, height - 1 + 20), Offset(width, height - 1 + 20), linePaint);
+    double heightOffset = (height - start) / 5;
+    double _reactWidth = (width ~/ 5).toDouble();
 
-    int count = (data.length ~/ 4).toInt() + 1;
-
-    //绘制竖线
-    for (var i = 1; i < 4; i++) {
-          canvas.drawLine(Offset((i * count + 0.5) * rectWidth ,0), Offset((i * count + 0.5) * rectWidth,height + 20), linePaint);
+    //绘制横线
+    canvas.drawLine(Offset(0, start), Offset(width, start), linePaint);
+    for (var i = 1; i < 6; i++) {
+      canvas.drawLine(Offset(0, heightOffset * i + start),
+          Offset(width, heightOffset * i + start), linePaint);
     }
-    
-    double priceOffset = (max - min) / 4;
-    double origin = width - max.toStringAsPrecision(7).length * 6;
-    drawText(canvas, Offset(origin, 20), max.toStringAsPrecision(7));
-    drawText(canvas, Offset(origin, heightOffset -12 + 20), (min + priceOffset * 3).toStringAsPrecision(7));
-    drawText(canvas, Offset(origin, heightOffset * 2 - 12 + 20), (min + priceOffset * 2).toStringAsPrecision(7));
-    drawText(canvas, Offset(origin, heightOffset * 3 - 12 + 20), (min + priceOffset).toStringAsPrecision(7));
-    drawText(canvas, Offset(origin, height - 12 + 20), min.toStringAsPrecision(7));
+    //绘制竖线
+    for (var i = 1; i < 5; i++) {
+      canvas.drawLine(Offset(i * _reactWidth, 0),
+          Offset(i * _reactWidth, height), linePaint);
+    }
+  }
 
+  drawPriceLine(Canvas canvas, Size size) {
+    double height = size.height;
+    double width = size.width;
+    double fontSizeHeight = 12;
+    int row = 5;
+    double begin = height - start;
+    double heightOffset = begin / 5;
+    double priceOffset = (max - min) / row;
+    double origin = width - max.toStringAsPrecision(7).length * 6;
+
+    //绘制最大的
+    drawText(canvas, Offset(origin, start - fontSizeHeight),
+        max.toStringAsPrecision(7));
+
+    drawText(canvas, Offset(origin, start + heightOffset - 12),
+        (min + priceOffset * 4).toStringAsPrecision(7));
+    drawText(canvas, Offset(origin, start + heightOffset * 2 - 12),
+        (min + priceOffset * 3).toStringAsPrecision(7));
+    drawText(canvas, Offset(origin, start + heightOffset * 3 - 12),
+        (min + priceOffset * 2).toStringAsPrecision(7));
+
+    //绘制最小的
+    drawText(canvas, Offset(origin, height - heightOffset - 12),
+        min.toStringAsPrecision(7));
   }
 
   drawVolumeLine(Canvas canvas, Size size) {
-    double height = size.height - 20;
+    double height = size.height;
     double width = size.width;
-
-    Paint linePaint = Paint()
-      ..color = lineColor
-      ..strokeWidth = lineWidth;
-
-    int count = (data.length ~/ 4).toInt() + 1;
-
-    //绘制横线
-    canvas.drawLine(Offset(0, 20), Offset(width, 20), linePaint);
-
-    //绘制竖线
-    for (var i = 1; i < 4; i++) {
-          canvas.drawLine(Offset((i * count + 0.5) * rectWidth ,20), Offset((i * count + 0.5) * rectWidth,height + 20), linePaint);
-    }
-    
+    double begin = height - start;
+    double heightOffset = begin / 5;
     double origin = width - max.toStringAsPrecision(7).length * 6;
-    drawText(canvas, Offset(origin, 20), maxVolume.toStringAsPrecision(7));
-
+    drawText(canvas, Offset(origin, start + heightOffset * 4 + 5),
+        maxVolume.toStringAsPrecision(7));
   }
 
   @override
