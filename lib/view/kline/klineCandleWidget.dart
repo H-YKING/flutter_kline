@@ -1,9 +1,9 @@
 /*
  * @Description: 
  * @Author: zhaojijin
- * @LastEditors: Please set LastEditorst LastEditors
+ * @LastEditors: Please set LastEditors
  * @Date: 2019-04-18 12:44:49
- * @LastEditTime: 2019-08-20 09:39:11
+ * @LastEditTime: 2019-08-21 21:33:37
  */
 
 import 'package:candleline/bloc/KlineBloc.1.dart';
@@ -95,9 +95,6 @@ class _CandlePainter extends CustomPainter {
       if (market.open > market.close) {
         painterColor = decreaseColor;
         paintingStyle = PaintingStyle.fill;
-      } else if (market.open == market.close) {
-        painterColor = Colors.white;
-        paintingStyle = PaintingStyle.fill;
       } else {
         painterColor = increaseColor;
         paintingStyle = PaintingStyle.fill;
@@ -110,7 +107,8 @@ class _CandlePainter extends CustomPainter {
         ..style = paintingStyle;
 
       // 绘制烛台
-      int j = listData.length - 1 - i;
+      // int j = listData.length - 1 - i;
+      int j = i;
       candlestickLeft =
           j * (candlestickWidth + candlestickGap) + candlestickGap;
       candlestickRight = candlestickLeft + candlestickWidth;
@@ -119,6 +117,12 @@ class _CandlePainter extends CustomPainter {
           height - (market.open - priceMin) * heightPriceOffset + topMargin;
       candlestickBottom =
           height - (market.close - priceMin) * heightPriceOffset + topMargin;
+
+      //涨跌幅为0的时候
+      if (candlestickTop == candlestickBottom) {
+        // candlestickTop = candlestickTop -1
+        candlestickBottom = candlestickBottom +1;
+      }
 
       Rect candlestickRect = Rect.fromLTRB(
           candlestickLeft, candlestickTop, candlestickRight, candlestickBottom);

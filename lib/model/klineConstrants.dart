@@ -3,7 +3,7 @@
  * @Author: zhaojijin
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-16 16:45:21
- * @LastEditTime: 2019-08-21 16:42:48
+ * @LastEditTime: 2019-08-22 10:43:03
  */
 
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ const double kCandlestickWidth = 7.0;
 const double kWickWidth = 1.0;
 
 /// 烛台间空隙
-const double kCandlestickGap = 2.0;
+const double kCandlestickGap = 1.0;
 
 /// 上影线上方距离
 const double kTopMargin = 30.0;

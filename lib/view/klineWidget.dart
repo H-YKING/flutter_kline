@@ -3,13 +3,14 @@
  * @Author: zhaojijin
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-18 13:54:54
- * @LastEditTime: 2019-08-21 17:32:28
+ * @LastEditTime: 2019-08-22 21:24:38
  */
 import 'package:candleline/model/klineConstrants.dart';
 import 'package:flutter/material.dart';
 
 import 'grid/klinePriceGridWidget.dart';
 import 'grid/klineVolumeGridWidget.dart';
+import 'kline/KlineDateWidget.dart';
 import 'kline/klineCandleCrossWidget.dart';
 import 'kline/klineCandleInfoWidget.dart';
 import 'kline/klineCandleWidget.dart';
@@ -37,8 +38,8 @@ class KlineWidget extends StatelessWidget {
                 Expanded(
                   child: Stack(
                     children: <Widget>[
-                      KlinePriceGridWidget(),
-                      KlineCandleWidget(),
+                      KlinePriceGridWidget(), //绘制网格
+                      KlineCandleWidget(), //绘制蜡烛
                       KlineMaLineWidget(YKMAType.MA5),
                       KlineMaLineWidget(YKMAType.MA10),
                       KlineMaLineWidget(YKMAType.MA30),
@@ -54,6 +55,10 @@ class KlineWidget extends StatelessWidget {
                     ],
                   ),
                 ),
+                Container(
+                  height: 10,
+                  child: KlineDateWidget(),
+                )
               ],
             ),
             KlineCandleCrossWidget(),

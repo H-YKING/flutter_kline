@@ -41,7 +41,8 @@ class KlinePageWidget extends StatelessWidget {
       if (offsetCount > bloc.klineCurrentList.length - 1) {
         return;
       }
-      int index = bloc.klineCurrentList.length - 1 - offsetCount;
+      // int index = bloc.klineCurrentList.length - 1 - offsetCount;
+      int index = offsetCount;
 
       if (index < bloc.klineCurrentList.length) {
         Market market = bloc.klineCurrentList[index];

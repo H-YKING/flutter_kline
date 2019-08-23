@@ -3,7 +3,7 @@
  * @Author: zhaojijin
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-18 15:21:47
- * @LastEditTime: 2019-08-20 09:42:58
+ * @LastEditTime: 2019-08-22 11:43:47
  */
 import 'package:candleline/bloc/KlineBloc.1.dart';
 import 'package:candleline/bloc/klineBlocProvider.dart';
@@ -67,8 +67,6 @@ class _KlineVolumePainter extends CustomPainter {
       Color painterColor;
       if (market.open > market.close) {
         painterColor = decreaseColor;
-      } else if (market.open == market.close) {
-        painterColor = Colors.white;
       } else {
         painterColor = increaseColor;
       }
@@ -79,7 +77,8 @@ class _KlineVolumePainter extends CustomPainter {
         ..filterQuality = FilterQuality.high;
 
       // 柱状体
-      int j = listData.length - 1 - i;
+      // int j = listData.length - 1 - i;
+      int j = i;
       columnarRectLeft = j * (columnarWidth + columnarGap) + columnarGap;
       columnarRectRight = columnarRectLeft + columnarWidth;
       columnarRectTop =
