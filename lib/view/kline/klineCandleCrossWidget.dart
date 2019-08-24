@@ -3,7 +3,7 @@
  * @Author: zhaojijin
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-22 17:15:14
- * @LastEditTime: 2019-08-21 20:26:22
+ * @LastEditTime: 2019-08-23 10:33:22
  */
 
 import 'dart:ui';
@@ -147,6 +147,10 @@ class _KlineCandleCrossPainter extends CustomPainter {
     Offset of = Offset(
         closeTextOriginX, originY + market.offset.dy - closePainter.height / 2);
     closePainter.paint(canvas, of);
+
+    //绘制底部时间
+
+
   }
 
   @override

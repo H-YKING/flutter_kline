@@ -3,7 +3,7 @@
  * @Author: zhaojijin
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-18 16:48:38
- * @LastEditTime: 2019-08-21 21:19:12
+ * @LastEditTime: 2019-08-23 10:36:01
  */
 import 'package:candleline/bloc/KlineBloc.1.dart';
 import 'package:candleline/bloc/klineBlocProvider.dart';
