@@ -139,15 +139,16 @@ class KlinePageWidget extends StatelessWidget {
     return KlineBlocProvider<KlineBloc>(
       bloc: bloc,
       child: GestureDetector(
-        onTap: () {
-          if (isLongPress) {
-            _hiddenCrossWidget();
-          }
+        onTapUp: (TapUpDetails detail) {
+          // if (isLongPress) {
+          //   _hiddenCrossWidget();
+          // }
+          _showCrossWidget(detail.globalPosition);
         },
 
         /// 长按
         onLongPressStart: (longPressDragStartDetail) {
-          _showCrossWidget(longPressDragStartDetail.globalPosition);
+          // _showCrossWidget(longPressDragStartDetail.globalPosition);
           // print('onLongPressDragStart');
         },
         onLongPressMoveUpdate: (longPressDragUpdateDetail) {

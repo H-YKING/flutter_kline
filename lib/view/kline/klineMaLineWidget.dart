@@ -3,7 +3,7 @@
  * @Author: zhaojijin
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-18 16:48:38
- * @LastEditTime: 2019-08-23 10:36:01
+ * @LastEditTime: 2019-09-02 15:35:39
  */
 import 'package:candleline/bloc/KlineBloc.1.dart';
 import 'package:candleline/bloc/klineBlocProvider.dart';
@@ -114,13 +114,13 @@ class _KlineMaLinePainter extends CustomPainter {
         ..strokeWidth = lineWidth;
 
       double startX, startY, endX, endY;
-      int j = listData.length - 1 - i;
-      // int j = i;
+      // int j = listData.length - 1 - i;
+      int j = i;
 
       double startRectLeft =
           j * (candlestickWidth + candlestickGap) + candlestickGap;
       double endRectLeft =
-          (j - 1) * (candlestickWidth + candlestickGap) + candlestickGap;
+          (j + 1) * (candlestickWidth + candlestickGap) + candlestickGap;
       startX = startRectLeft + candlestickWidth / 2;
       endX = endRectLeft + candlestickWidth / 2;
 
