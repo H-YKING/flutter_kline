@@ -79,7 +79,7 @@ class KlinePageWidget extends StatelessWidget {
         return;
       }
       isHorizontalDrag = true;
-      double offsetX = offset.dx - lastPoint.dx;
+      double offsetX = lastPoint.dx - offset.dx;
       int singleScreenCandleCount =
           bloc.getSingleScreenCandleCount(screenWidth);
       // 当前偏移的个数

@@ -3,7 +3,7 @@
  * @Author: zhaojijin
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-18 13:54:54
- * @LastEditTime: 2019-09-02 15:35:45
+ * @LastEditTime: 2019-09-02 19:44:59
  */
 import 'package:candleline/model/klineConstrants.dart';
 import 'package:flutter/material.dart';
